@@ -1,0 +1,10 @@
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\bin\Debug\netcoreapp3.1\NumberGame_AWSLambda.deps.json
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\bin\Debug\netcoreapp3.1\NumberGame_AWSLambda.runtimeconfig.json
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\bin\Debug\netcoreapp3.1\NumberGame_AWSLambda.runtimeconfig.dev.json
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\bin\Debug\netcoreapp3.1\NumberGame_AWSLambda.dll
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\obj\Debug\netcoreapp3.1\NumberGame_AWSLambda.csprojAssemblyReference.cache
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\obj\Debug\netcoreapp3.1\NumberGame_AWSLambda.AssemblyInfoInputs.cache
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\obj\Debug\netcoreapp3.1\NumberGame_AWSLambda.AssemblyInfo.cs
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\bin\Debug\netcoreapp3.1\NumberGame_AWSLambda.pdb
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\obj\Debug\netcoreapp3.1\NumberGame_AWSLambda.dll
+C:\XamarinApps\Demos X\NumberGame_AWSLambda\NumberGame_AWSLambda\obj\Debug\netcoreapp3.1\NumberGame_AWSLambda.pdb
