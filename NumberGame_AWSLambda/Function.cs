@@ -6,7 +6,7 @@ using Amazon.Lambda.Core;
 using Alexa.NET.Response;
 using Alexa.NET.Request.Type;
 using System.Collections.Generic;
-using Amazon.Lambda.Serialization;
+using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.LambdaJsonSerializer))]
@@ -15,10 +15,12 @@ namespace NumberGame_AWSLambda
 {
     public class Function
     {
-        public SkillResponse FunctionHandler(object inputObject, ILambdaContext context)
+        public async Task<string> FunctionHandler(object inputObject, ILambdaContext context)
         {
             var input = JsonConvert.DeserializeObject<SkillRequest>(inputObject.ToString());
-           
+
+            SkillResponse tell = null;
+
             ILambdaLogger log = context.Logger;
             log.LogLine($"Skill Request Object:" + JsonConvert.SerializeObject(input));
 
@@ -32,14 +34,12 @@ namespace NumberGame_AWSLambda
                 string speech = "Welcome! Say new game to start";
                 Reprompt rp = new Reprompt("Say new game to start");
 
-                var tell = ResponseBuilder.Tell(speech, session);
+                tell = ResponseBuilder.Tell(speech, session);
                 tell.Response.ShouldEndSession = false;
-
-                return tell;
             }
             else if (input.GetRequestType() == typeof(SessionEndedRequest))
             {
-                return ResponseBuilder.Tell("Goodbye!");
+                tell = ResponseBuilder.Tell("Goodbye!");
             }
             else if (input.GetRequestType() == typeof(IntentRequest))
             {
@@ -48,12 +48,14 @@ namespace NumberGame_AWSLambda
                 {
                     case "AMAZON.CancelIntent":
                     case "AMAZON.StopIntent":
-                        return ResponseBuilder.Tell("Goodbye!");
+                        tell = ResponseBuilder.Tell("Goodbye!");
+                        break;
                     case "AMAZON.HelpIntent":
                         {
                             Reprompt rp = new Reprompt("What's next?");
-                            return ResponseBuilder.Ask("Here's some help. What's next?", rp, session);
+                            tell = ResponseBuilder.Ask("Here's some help. What's next?", rp, session);
                         }
+                        break;
                     case "NewGameIntent":
                         {
                             session.Attributes["num_guesses"] = 0;
@@ -63,8 +65,9 @@ namespace NumberGame_AWSLambda
 
                             string next = "Guess a number betwen 1 and 10";
                             Reprompt rp = new Reprompt(next);
-                            return ResponseBuilder.Ask(next, rp, session);
+                            tell = ResponseBuilder.Ask(next, rp, session);
                         }
+                        break;
                     case "AnswerIntent":
                         {
                             // check answer
@@ -85,19 +88,27 @@ namespace NumberGame_AWSLambda
                                 session.Attributes["num_guesses"] = numTries;
                             }
                             Reprompt rp = new Reprompt("speech");
-                            return ResponseBuilder.Ask(speech, rp, session);
+                            tell = ResponseBuilder.Ask(speech, rp, session);
                         }
+                        break;
                     default:
                         {
                             log.LogLine($"Unknown intent: " + intentRequest.Intent.Name);
                             string speech = "I didn't understand - try again?";
                             Reprompt rp = new Reprompt(speech);
-                            return ResponseBuilder.Ask(speech, rp, session);
+                            tell = ResponseBuilder.Ask(speech, rp, session);
                         }
+                        break;
                 }
             }
-            return ResponseBuilder.Tell("Goodbye!");
-        }
 
+            /*return JsonConvert.SerializeObject(tell, Formatting.None, new JsonSerializerSettings 
+            { 
+                NullValueHandling = NullValueHandling.Ignore 
+            }).Replace("\u0022", String.Empty).Trim();*/
+
+            var x = JsonConvert.SerializeObject(tell, Formatting.None, new JsonSerializerSettings());
+            return x;
+        }
     }
 }
